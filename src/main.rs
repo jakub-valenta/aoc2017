@@ -15,7 +15,12 @@ fn main() {
     let puzzle = args[1].parse::<u32>();
     match puzzle {
         Ok(1) => {
-            let captcha = aoc1::sum_digits(&args[2]);
+            let star = args[2].parse::<u32>();
+            let captcha = match star {
+                Ok(1) => aoc1::sum_digits(&args[3]),
+                Ok(2) => aoc1::sum_digits_half(&args[3]),
+                _ => None,
+            };
             match captcha {
                 Some(x) => println!("Captcha solved {}!", x),
                 None => println!("Invalid captcha input!"),
