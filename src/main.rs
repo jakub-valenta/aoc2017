@@ -1,5 +1,6 @@
 mod aoc1;
 mod aoc2;
+mod aoc3;
 
 use std::env;
 use std::error::Error;
@@ -24,6 +25,19 @@ fn main() {
             match checksum {
                 Ok(x) => println!("Checksum calculated {}!", x),
                 Err(e) => println!("Invalid checksum input {}!", e.description()),
+            }
+        }
+        Ok(3) => {
+            let cell = args[2].parse::<u32>();
+            match cell {
+                Ok(cell) => {
+                    let steps = aoc3::distance(cell);
+                    match steps {
+                        Some(x) => println!("Distance calculated {}!", x),
+                        None => println!("Invalid cell number {}!", cell),
+                    }
+                }
+                Err(err) => println!("Invalid input {}!", err),
             }
         }
         Ok(_) => println!("Unknown puzzle!"),
