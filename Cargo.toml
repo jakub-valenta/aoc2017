@@ -1,0 +1,6 @@
+[package]
+name = "aoc20017"
+version = "0.1.0"
+authors = ["Jakub Valenta"]
+
+[dependencies]
