@@ -1,6 +1,7 @@
 mod aoc1;
 mod aoc2;
 mod aoc3;
+mod aoc4;
 
 use std::env;
 use std::error::Error;
@@ -38,6 +39,13 @@ fn main() {
                     }
                 }
                 Err(err) => println!("Invalid input {}!", err),
+            }
+        }
+        Ok(4) => {
+            if aoc4::verify_pass_phrase(&merge_args(&args, 2, " ")) {
+                println!("Passphrase correct!");
+            } else {
+                println!("Passphrase incorrect!");
             }
         }
         Ok(_) => println!("Unknown puzzle!"),
