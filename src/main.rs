@@ -5,6 +5,7 @@ mod aoc4;
 
 use std::env;
 use std::error::Error;
+use std::num::ParseIntError;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -27,7 +28,13 @@ fn main() {
             };
         }
         Ok(2) => {
-            let checksum = aoc2::checksum(&merge_args(&args, 2, "\n"));
+            let star = args[2].parse::<u32>();
+            let checksum = match star {
+                Ok(1) => aoc2::checksum(&merge_args(&args, 3, "\n")),
+                Ok(2) => aoc2::checksum_div(&merge_args(&args, 3, "\n")),
+                Ok(_) => aoc2::checksum("x"),
+                Err(e) => Err(e),
+            };
             match checksum {
                 Ok(x) => println!("Checksum calculated {}!", x),
                 Err(e) => println!("Invalid checksum input {}!", e.description()),
