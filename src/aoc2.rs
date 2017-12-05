@@ -1,7 +1,6 @@
-use std::num::ParseIntError;
-use std::str::FromStr;
+use utils;
 
-pub fn checksum(digits: &str) -> Result<u32, ParseIntError> {
+pub fn checksum(digits: &str) -> Option<u32> {
     let mut checksum = 0;
     let values = parse_file(digits)?;
     for row in values.iter() {
@@ -10,10 +9,10 @@ pub fn checksum(digits: &str) -> Result<u32, ParseIntError> {
         });
         checksum += max - min;
     }
-    Ok(checksum)
+    Some(checksum)
 }
 
-pub fn checksum_div(digits: &str) -> Result<u32, ParseIntError> {
+pub fn checksum_div(digits: &str) -> Option<u32> {
     let mut checksum = 0;
     let values = parse_file(digits)?;
     for mut row in values {
@@ -28,45 +27,41 @@ pub fn checksum_div(digits: &str) -> Result<u32, ParseIntError> {
             }
         }
     }
-    Ok(checksum)
+    Some(checksum)
 }
 
-fn parse_file(digits: &str) -> Result<Vec<Vec<u32>>, ParseIntError> {
+fn parse_file(digits: &str) -> Option<Vec<Vec<u32>>> {
     let mut file = vec![];
     for line in digits.lines() {
-        let mut row = vec![];
-        for item in line.split(' ') {
-            row.push(u32::from_str(item)?);
-        }
-        file.push(row);
+        file.push(utils::parse_numbers(line)?);
     }
-    Ok(file)
+    Some(file)
 }
 
 #[test]
 fn test_invalid() {
-    assert!(checksum("....\nasdasd").is_err())
+    assert_eq!(None, checksum("....\nasdasd"))
 }
 
 #[test]
 fn test_examples() {
-    assert_eq!(Ok(18), checksum("5 1 9 5\n7 5 3\n2 4 6 8"));
-    assert_eq!(Ok(0), checksum("5 5 5 5"));
-    assert_eq!(Ok(0), checksum(""));
+    assert_eq!(Some(18), checksum("5 1 9 5\n7 5 3\n2 4 6 8"));
+    assert_eq!(Some(0), checksum("5 5 5 5"));
+    assert_eq!(Some(0), checksum(""));
 }
 
 #[test]
 fn test_parse_file() {
-    assert!(parse_file("....\nasdasd").is_err());
+    assert_eq!(None, parse_file("....\nasdasd"));
     assert_eq!(
-        Ok(vec![vec![5, 1], vec![7], vec![2, 4, 6]]),
+        Some(vec![vec![5, 1], vec![7], vec![2, 4, 6]]),
         parse_file("5 1\n7\n2 4 6")
     );
 }
 
 #[test]
 fn test_examples_div() {
-    assert_eq!(Ok(9), checksum_div("5 9 2 8\n9 4 7 3\n3 8 6 5"));
-    assert_eq!(Ok(1), checksum_div("5 5"));
-    assert_eq!(Ok(0), checksum_div(""));
+    assert_eq!(Some(9), checksum_div("5 9 2 8\n9 4 7 3\n3 8 6 5"));
+    assert_eq!(Some(1), checksum_div("5 5"));
+    assert_eq!(Some(0), checksum_div(""));
 }

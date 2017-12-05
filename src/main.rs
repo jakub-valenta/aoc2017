@@ -2,9 +2,9 @@ mod aoc1;
 mod aoc2;
 mod aoc3;
 mod aoc4;
+mod utils;
 
 use std::env;
-use std::error::Error;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -37,8 +37,8 @@ fn main() {
                 aoc2::checksum_div(&merge_args(&args, 3, "\n"))
             };
             match checksum {
-                Ok(x) => println!("Checksum calculated {}!", x),
-                Err(e) => println!("Invalid checksum input {}!", e.description()),
+                Some(x) => println!("Checksum calculated {}!", x),
+                None => println!("Invalid checksum input!"),
             }
         }
         3 => {
