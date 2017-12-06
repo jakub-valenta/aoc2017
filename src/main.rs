@@ -68,7 +68,12 @@ fn main() {
             }
         }
         5 => {
-            match aoc5::process_instructions(&utils::merge_args(&args, 3, " ")) {
+            let steps = if star == 1 {
+                aoc5::process_instructions(&utils::merge_args(&args, 3, " "))
+            } else {
+                aoc5::process_instructions_strange(&utils::merge_args(&args, 3, " "))
+            };
+            match steps {
                 Some(x) => println!("Finished in {} steps!", x),
                 None => println!("Invalid instructions input!"),
             }
