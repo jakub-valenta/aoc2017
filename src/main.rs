@@ -47,7 +47,11 @@ fn main() {
             let cell = args[3].parse::<u32>();
             match cell {
                 Ok(cell) => {
-                    let steps = aoc3::distance(cell);
+                    let steps = if star == 1 {
+                        aoc3::distance(cell)
+                    } else {
+                        aoc3::calculate_bigger_than(cell)
+                    };
                     match steps {
                         Some(x) => println!("Distance calculated {}!", x),
                         None => println!("Invalid cell number {}!", cell),
