@@ -2,6 +2,7 @@ mod aoc1;
 mod aoc2;
 mod aoc3;
 mod aoc4;
+mod aoc5;
 mod utils;
 
 use std::env;
@@ -32,9 +33,9 @@ fn main() {
         }
         2 => {
             let checksum = if star == 1 {
-                aoc2::checksum(&merge_args(&args, 3, "\n"))
+                aoc2::checksum(&utils::merge_args(&args, 3, "\n"))
             } else {
-                aoc2::checksum_div(&merge_args(&args, 3, "\n"))
+                aoc2::checksum_div(&utils::merge_args(&args, 3, "\n"))
             };
             match checksum {
                 Some(x) => println!("Checksum calculated {}!", x),
@@ -56,9 +57,9 @@ fn main() {
         }
         4 => {
             let valid = if star == 1 {
-                aoc4::verify_pass_phrase(&merge_args(&args, 3, " "))
+                aoc4::verify_pass_phrase(&utils::merge_args(&args, 3, " "))
             } else {
-                aoc4::verify_pass_phrase_anagram(&merge_args(&args, 3, " "))
+                aoc4::verify_pass_phrase_anagram(&utils::merge_args(&args, 3, " "))
             };
             if valid {
                 println!("Correct passphrase!");
@@ -66,12 +67,12 @@ fn main() {
                 println!("Incorrect passphrase!");
             }
         }
+        5 => {
+            match aoc5::process_instructions(&utils::merge_args(&args, 3, " ")) {
+                Some(x) => println!("Finished in {} steps!", x),
+                None => println!("Invalid instructions input!"),
+            }
+        }
         _ => println!("Unknown puzzle!"),
     }
-}
-
-fn merge_args(args: &Vec<String>, first: usize, separator: &str) -> String {
-    args.iter().skip(first).fold(String::new(), |acc, item| {
-        acc + item + separator
-    })
 }
