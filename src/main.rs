@@ -80,13 +80,14 @@ fn main() {
             }
         }
         6 => {
-            let steps = if star == 1 {
-                aoc6::detect_cycle(&utils::merge_args(&args, 3, " "))
-            } else {
-                None
-            };
-            match steps {
-                Some(x) => println!("Finished in {} steps!", x),
+            match aoc6::detect_cycle(&utils::merge_args(&args, 3, " ")) {
+                Some((steps, loop_length)) => {
+                    println!(
+                        "Finished in {} steps, infinite loop length is {}!",
+                        steps,
+                        loop_length
+                    )
+                }
                 None => println!("Invalid instructions input!"),
             }
         }

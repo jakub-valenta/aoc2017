@@ -1,17 +1,21 @@
-use std::collections::HashSet;
 use utils;
 
-pub fn detect_cycle(input: &str) -> Option<u32> {
+pub fn detect_cycle(input: &str) -> Option<(u32, usize)> {
     let mut steps = 0;
     let mut memory_banks = utils::parse_numbers::<u32>(input)?;
-    let mut states = HashSet::new();
-    while !states.contains(&memory_banks) {
-        steps += 1;
-        let next = redistribute(&memory_banks);
-        states.insert(memory_banks);
-        memory_banks = next;
+    let mut states = vec![];
+    loop {
+        match states.iter().rposition(|x| x == &memory_banks) {
+            Some(position) => return Some((steps, states.len() - position)),
+            _ => {
+                steps += 1;
+                let next = redistribute(&memory_banks);
+                states.push(memory_banks);
+                memory_banks = next;
+            }
+        }
     }
-    Some(steps)
+
 }
 
 fn redistribute(banks: &Vec<u32>) -> Vec<u32> {
@@ -35,6 +39,8 @@ fn redistribute(banks: &Vec<u32>) -> Vec<u32> {
     redistributed
 }
 
+
+
 #[test]
 fn test_invalid() {
     assert_eq!(None, detect_cycle("1 asdsda"));
@@ -42,8 +48,8 @@ fn test_invalid() {
 
 #[test]
 fn test_examples() {
-    assert_eq!(Some(1), detect_cycle(""));
-    assert_eq!(Some(5), detect_cycle("0 2 7 0"));
+    assert_eq!(Some((1, 1)), detect_cycle(""));
+    assert_eq!(Some((5, 4)), detect_cycle("0 2 7 0"));
 }
 
 #[test]
