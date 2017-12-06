@@ -3,6 +3,7 @@ mod aoc2;
 mod aoc3;
 mod aoc4;
 mod aoc5;
+mod aoc6;
 mod utils;
 
 use std::env;
@@ -72,6 +73,17 @@ fn main() {
                 aoc5::process_instructions(&utils::merge_args(&args, 3, " "))
             } else {
                 aoc5::process_instructions_strange(&utils::merge_args(&args, 3, " "))
+            };
+            match steps {
+                Some(x) => println!("Finished in {} steps!", x),
+                None => println!("Invalid instructions input!"),
+            }
+        }
+        6 => {
+            let steps = if star == 1 {
+                aoc6::detect_cycle(&utils::merge_args(&args, 3, " "))
+            } else {
+                None
             };
             match steps {
                 Some(x) => println!("Finished in {} steps!", x),
