@@ -98,9 +98,17 @@ fn main() {
             }
         }
         7 => {
-            match aoc7::find_bottom_program(&utils::merge_args(&args, 3, "\n")) {
-                Some(program) => println!("Bottom program is {}!", program),
-                None => println!("Invalid programs!"),
+            if star == 1 {
+                match aoc7::find_bottom_program(&utils::merge_args(&args, 3, "\n")) {
+                    Some(program) => println!("Bottom program is {}!", program),
+                    None => println!("Invalid programs!"),
+                }
+            } else {
+                match aoc7::correct_weight(&utils::merge_args(&args, 3, "\n")) {
+                    Some(weight) => println!("Correct weight is {}!", weight),
+                    None => println!("Invalid programs!"),
+                }
+            }
         }
         8 => {
             let max = if star == 1 {
