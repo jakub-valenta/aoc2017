@@ -5,6 +5,7 @@ mod aoc4;
 mod aoc5;
 mod aoc6;
 mod aoc7;
+mod aoc8;
 mod utils;
 
 use std::env;
@@ -100,6 +101,15 @@ fn main() {
             match aoc7::find_bottom_program(&utils::merge_args(&args, 3, "\n")) {
                 Some(program) => println!("Bottom program is {}!", program),
                 None => println!("Invalid programs!"),
+        }
+        8 => {
+            if star == 1 {
+                match aoc8::find_max(&utils::merge_args(&args, 3, "\n")) {
+                    Some(max) => println!("Max value in register is {}!", max),
+                    None => println!("Invalid programs!"),
+                }
+            } else {
+                println!("Not implemented!")
             }
         }
         _ => println!("Unknown puzzle!"),
