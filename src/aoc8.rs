@@ -1,18 +1,34 @@
+use std::cmp;
 use std::collections::HashMap;
 use std::convert::AsRef;
 use std::num::ParseIntError;
 use std::str::FromStr;
 
 pub fn find_max(program: &str) -> Option<i32> {
+    find_max_impl(program, true)
+}
+
+pub fn find_max_total(program: &str) -> Option<i32> {
+    find_max_impl(program, false)
+}
+
+fn find_max_impl(program: &str, end_max: bool) -> Option<i32> {
     let instructions = parse_program(program)?;
     let mut registers = HashMap::new();
+    let mut max = i32::min_value();
     for instruction in instructions.iter() {
         instruction.process(&mut registers);
+        if !end_max {
+            max = cmp::max(
+                max,
+                *registers.iter().max_by(|&(_, l), &(_, r)| l.cmp(r))?.1,
+            );
+        }
     }
-    for (k, v) in registers.iter() {
-        println!("({}, {})", k, v);
+    if end_max {
+        max = *registers.iter().max_by(|&(_, l), &(_, r)| l.cmp(r))?.1;
     }
-    Some(*registers.iter().max_by(|&(_, l), &(_, r)| l.cmp(r))?.1)
+    Some(max)
 }
 
 fn parse_program(program: &str) -> Option<Vec<Instruction>> {

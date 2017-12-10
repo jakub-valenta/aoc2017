@@ -103,13 +103,14 @@ fn main() {
                 None => println!("Invalid programs!"),
         }
         8 => {
-            if star == 1 {
-                match aoc8::find_max(&utils::merge_args(&args, 3, "\n")) {
-                    Some(max) => println!("Max value in register is {}!", max),
-                    None => println!("Invalid programs!"),
-                }
+            let max = if star == 1 {
+                aoc8::find_max(&utils::merge_args(&args, 3, "\n"))
             } else {
-                println!("Not implemented!")
+                aoc8::find_max_total(&utils::merge_args(&args, 3, "\n"))
+            };
+            match max {
+                Some(max) => println!("Max value in register is {}!", max),
+                None => println!("Invalid programs!"),
             }
         }
         _ => println!("Unknown puzzle!"),
