@@ -4,6 +4,7 @@ mod aoc3;
 mod aoc4;
 mod aoc5;
 mod aoc6;
+mod aoc7;
 mod utils;
 
 use std::env;
@@ -93,6 +94,12 @@ fn main() {
                     )
                 }
                 None => println!("Invalid instructions input!"),
+            }
+        }
+        7 => {
+            match aoc7::find_bottom_program(&utils::merge_args(&args, 3, "\n")) {
+                Some(program) => println!("Bottom program is {}!", program),
+                None => println!("Invalid programs!"),
             }
         }
         _ => println!("Unknown puzzle!"),
