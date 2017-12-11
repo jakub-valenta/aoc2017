@@ -123,9 +123,15 @@ fn main() {
             }
         }
         9 => {
-            let score = aoc9::compute_score(&args[3]);
-            match score {
-                Some(score) => println!("Score is {}!", score),
+            let result = aoc9::compute_score(&args[3]);
+            match result {
+                Some((score, garbage_count)) => {
+                    if star == 1 {
+                        println!("Score is {}!", score);
+                    } else {
+                        println!("Garbage count is {}!", garbage_count);
+                    }
+                }
                 None => println!("Invalid input!"),
             }
         }
