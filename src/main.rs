@@ -6,6 +6,7 @@ mod aoc5;
 mod aoc6;
 mod aoc7;
 mod aoc8;
+mod aoc9;
 mod utils;
 
 use std::env;
@@ -119,6 +120,13 @@ fn main() {
             match max {
                 Some(max) => println!("Max value in register is {}!", max),
                 None => println!("Invalid programs!"),
+            }
+        }
+        9 => {
+            let score = aoc9::compute_score(&args[3]);
+            match score {
+                Some(score) => println!("Score is {}!", score),
+                None => println!("Invalid input!"),
             }
         }
         _ => println!("Unknown puzzle!"),
