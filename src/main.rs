@@ -7,6 +7,7 @@ mod aoc6;
 mod aoc7;
 mod aoc8;
 mod aoc9;
+mod aoc10;
 mod utils;
 
 use std::env;
@@ -132,6 +133,12 @@ fn main() {
                         println!("Garbage count is {}!", garbage_count);
                     }
                 }
+                None => println!("Invalid input!"),
+            }
+        }
+        10 => {
+            match aoc10::knot_tying_hash(&utils::merge_args(&args, 3, " ")) {
+                Some(hash) => println!("Hash is {}!", hash),
                 None => println!("Invalid input!"),
             }
         }
