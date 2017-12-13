@@ -10,11 +10,11 @@ pub fn merge_args(args: &Vec<String>, first: usize, separator: &str) -> String {
     })
 }
 
-pub fn parse_numbers<T: FromStr>(digits: &str) -> Option<Vec<T>> {
+pub fn parse_numbers<T: FromStr>(digits: &str, delimiter: char) -> Option<Vec<T>> {
     let mut row = vec![];
     let digits = digits.trim();
     if digits.len() > 0 {
-        for item in digits.split(' ') {
+        for item in digits.split(delimiter) {
             match item.parse::<T>() {
                 Ok(x) => row.push(x),
                 _ => return None,
@@ -26,15 +26,15 @@ pub fn parse_numbers<T: FromStr>(digits: &str) -> Option<Vec<T>> {
 
 #[test]
 fn test_parse_numbers_error() {
-    assert_eq!(None, parse_numbers::<i32>("....\nasdasd"));
-    assert_eq!(None, parse_numbers::<u32>("-1 5"));
+    assert_eq!(None, parse_numbers::<i32>("....\nasdasd", ' '));
+    assert_eq!(None, parse_numbers::<u32>("-1 5", ' '));
 }
 
 #[test]
 fn test_parse_numbers() {
-    assert_eq!(Some(vec![]), parse_numbers::<i32>(""));
-    assert_eq!(Some(vec![-5, 6, 7]), parse_numbers::<i32>("-5 6 7 "));
-    assert_eq!(Some(vec![5, 6, 7]), parse_numbers::<u32>("5 6 7"));
+    assert_eq!(Some(vec![]), parse_numbers::<i32>("", ' '));
+    assert_eq!(Some(vec![-5, 6, 7]), parse_numbers::<i32>("-5 6 7 ", ' '));
+    assert_eq!(Some(vec![5, 6, 7]), parse_numbers::<u32>("5 6 7", ' '));
 }
 
 #[test]

@@ -137,9 +137,16 @@ fn main() {
             }
         }
         10 => {
-            match aoc10::knot_tying_hash(&utils::merge_args(&args, 3, " ")) {
-                Some(hash) => println!("Hash is {}!", hash),
-                None => println!("Invalid input!"),
+            if star == 1 {
+                match aoc10::knot_tying_hash_round(&utils::merge_args(&args, 3, ",")) {
+                    Some(hash) => println!("Hash is {}!", hash),
+                    None => println!("Invalid input!"),
+                }
+            } else {
+                println!(
+                    "Hash is {}!",
+                    aoc10::knot_tying_hash(&utils::merge_args(&args, 3, ""))
+                );
             }
         }
         _ => println!("Unknown puzzle!"),

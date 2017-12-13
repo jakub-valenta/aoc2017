@@ -2,7 +2,7 @@ use utils;
 
 pub fn detect_cycle(input: &str) -> Option<(u32, usize)> {
     let mut steps = 0;
-    let mut memory_banks = utils::parse_numbers::<u32>(input)?;
+    let mut memory_banks = utils::parse_numbers::<u32>(input, ' ')?;
     let mut states = vec![];
     loop {
         match states.iter().rposition(|x| x == &memory_banks) {

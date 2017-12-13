@@ -33,7 +33,7 @@ pub fn checksum_div(digits: &str) -> Option<u32> {
 fn parse_file(digits: &str) -> Option<Vec<Vec<u32>>> {
     let mut file = vec![];
     for line in digits.lines() {
-        file.push(utils::parse_numbers(line)?);
+        file.push(utils::parse_numbers(line, ' ')?);
     }
     Some(file)
 }

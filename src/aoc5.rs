@@ -3,7 +3,7 @@ use utils;
 pub fn process_instructions(input: &str) -> Option<u32> {
     let mut steps = 0;
     let mut pc = 0;
-    let mut instructions = utils::parse_numbers::<i32>(input)?;
+    let mut instructions = utils::parse_numbers::<i32>(input, ' ')?;
     while (pc as usize) < instructions.len() {
         steps += 1;
         let index = pc as usize;
@@ -16,7 +16,7 @@ pub fn process_instructions(input: &str) -> Option<u32> {
 pub fn process_instructions_strange(input: &str) -> Option<u32> {
     let mut steps = 0;
     let mut pc = 0;
-    let mut instructions = utils::parse_numbers::<i32>(input)?;
+    let mut instructions = utils::parse_numbers::<i32>(input, ' ')?;
     while (pc as usize) < instructions.len() {
         steps += 1;
         let index = pc as usize;
