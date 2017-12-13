@@ -8,6 +8,7 @@ mod aoc7;
 mod aoc8;
 mod aoc9;
 mod aoc10;
+mod aoc11;
 mod utils;
 
 use std::env;
@@ -147,6 +148,12 @@ fn main() {
                     "Hash is {}!",
                     aoc10::knot_tying_hash(&utils::merge_args(&args, 3, ""))
                 );
+            }
+        }
+        11 => {
+            match aoc11::find_shortest_path(&args[3]) {
+                Some(path) => println!("Shortest path is {} steps!", path),
+                None => println!("Invalid input!"),
             }
         }
         _ => println!("Unknown puzzle!"),
