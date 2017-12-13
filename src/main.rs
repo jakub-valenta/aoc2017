@@ -151,9 +151,16 @@ fn main() {
             }
         }
         11 => {
-            match aoc11::find_shortest_path(&args[3]) {
-                Some(path) => println!("Shortest path is {} steps!", path),
-                None => println!("Invalid input!"),
+            if star == 1 {
+                match aoc11::find_shortest_path(&args[3]) {
+                    Some(path) => println!("Shortest path is {} steps!", path),
+                    None => println!("Invalid input!"),
+                }
+            } else {
+                match aoc11::find_furthest_point(&args[3]) {
+                    Some(path) => println!("Furthest point was {} steps away!", path),
+                    None => println!("Invalid input!"),
+                }
             }
         }
         _ => println!("Unknown puzzle!"),

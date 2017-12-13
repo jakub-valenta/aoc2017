@@ -6,12 +6,29 @@ pub fn find_shortest_path(path: &str) -> Option<u32> {
         .map(Direction::from_str)
         .collect::<Result<Vec<_>, _>>()
         .ok()?;
-    let mut start = Hex::new();
-    directions.iter().for_each(|x| start.step(&x));
-    Some(cmp::max(
-        cmp::max(start.x.abs(), start.y.abs()),
-        start.z.abs(),
-    ) as u32)
+    Some(
+        directions
+            .iter()
+            .fold(Hex::new(), |acc, x| acc.step(&x))
+            .distance_from_start(),
+    )
+}
+
+pub fn find_furthest_point(path: &str) -> Option<u32> {
+    let directions = path.split(',')
+        .map(Direction::from_str)
+        .collect::<Result<Vec<_>, _>>()
+        .ok()?;
+    let mut max = 0;
+    directions.iter().fold(Hex::new(), |acc, x| {
+        let position = acc.step(&x);
+        let distance = position.distance_from_start();
+        if distance > max {
+            max = distance;
+        };
+        position
+    });
+    Some(max)
 }
 
 struct Error;
@@ -64,11 +81,17 @@ impl Hex {
         Hex { x: 0, y: 0, z: 0 }
     }
 
-    fn step(&mut self, direction: &Direction) {
+    fn step(&self, direction: &Direction) -> Hex {
         let (x, y, z) = direction.coordinates();
-        self.x += x;
-        self.y += y;
-        self.z += z;
+        Hex {
+            x: self.x + x,
+            y: self.y + y,
+            z: self.z + z,
+        }
+    }
+
+    fn distance_from_start(&self) -> u32 {
+        cmp::max(cmp::max(self.x.abs(), self.y.abs()), self.z.abs()) as u32
     }
 }
 
@@ -78,4 +101,9 @@ fn test_examples() {
     assert_eq!(Some(0), find_shortest_path("ne,ne,sw,sw"));
     assert_eq!(Some(2), find_shortest_path("ne,ne,s,s"));
     assert_eq!(Some(3), find_shortest_path("se,sw,se,sw,sw"));
+
+    assert_eq!(Some(3), find_furthest_point("ne,ne,ne"));
+    assert_eq!(Some(2), find_furthest_point("ne,ne,sw,sw"));
+    assert_eq!(Some(2), find_furthest_point("ne,ne,s,s"));
+    assert_eq!(Some(3), find_furthest_point("se,sw,se,sw,sw"));
 }
