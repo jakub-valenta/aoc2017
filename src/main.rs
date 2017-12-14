@@ -11,6 +11,7 @@ mod aoc10;
 mod aoc11;
 mod aoc12;
 mod aoc13;
+mod aoc14;
 mod utils;
 
 use std::env;
@@ -191,6 +192,15 @@ fn main() {
                 }
             }
         }
+        14 => {
+            if star == 1 {
+                println!(
+                    "There are {} used squares!",
+                    aoc14::count_used_squares(&args[3])
+                );
+            }
+        }
+
         _ => println!("Unknown puzzle!"),
     }
 }

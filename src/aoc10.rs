@@ -8,14 +8,18 @@ pub fn knot_tying_hash_round(instructions: &str) -> Option<u32> {
 }
 
 pub fn knot_tying_hash(text: &str) -> String {
-    let mut input: Vec<u8> = text.bytes().collect();
-    input.append(&mut vec![17, 31, 73, 47, 23]);
-    let mut hash = KnotTypingHash::new(256);
-    let dense_hash = hash.compute_dense_hash(&input);
+    let dense_hash = knot_tying_hash_raw(text);
     dense_hash.iter().fold(String::new(), |mut acc, x| {
         acc.push_str(&format!("{:02x}", x));
         acc
     })
+}
+
+pub fn knot_tying_hash_raw(text: &str) -> Vec<u8> {
+    let mut input: Vec<u8> = text.bytes().collect();
+    input.append(&mut vec![17, 31, 73, 47, 23]);
+    let mut hash = KnotTypingHash::new(256);
+    hash.compute_dense_hash(&input)
 }
 
 struct KnotTypingHash {
