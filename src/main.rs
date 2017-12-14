@@ -198,6 +198,11 @@ fn main() {
                     "There are {} used squares!",
                     aoc14::count_used_squares(&args[3])
                 );
+            } else {
+                println!(
+                    "There are {} memory regions!",
+                    aoc14::count_regions(&args[3])
+                );
             }
         }
 
