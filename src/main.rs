@@ -10,6 +10,7 @@ mod aoc9;
 mod aoc10;
 mod aoc11;
 mod aoc12;
+mod aoc13;
 mod utils;
 
 use std::env;
@@ -173,6 +174,14 @@ fn main() {
             } else {
                 match aoc12::program_groups(&utils::merge_args(&args, 3, "\n")) {
                     Some(group_count) => println!("Independent program groups: {}!", group_count),
+                    None => println!("Invalid input!"),
+                }
+            }
+        }
+        13 => {
+            if star == 1 {
+                match aoc13::compute_severity(&utils::merge_args(&args, 3, "\n")) {
+                    Some(severity) => println!("Packet severity is {}!", severity),
                     None => println!("Invalid input!"),
                 }
             }
