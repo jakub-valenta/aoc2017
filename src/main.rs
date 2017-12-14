@@ -165,9 +165,16 @@ fn main() {
             }
         }
         12 => {
-            match aoc12::connected_programs(&utils::merge_args(&args, 3, "\n")) {
-                Some(group_size) => println!("Program count connected to '0': {}!", group_size),
-                None => println!("Invalid input!"),
+            if star == 1 {
+                match aoc12::connected_programs(&utils::merge_args(&args, 3, "\n")) {
+                    Some(group_size) => println!("Program count connected to '0': {}!", group_size),
+                    None => println!("Invalid input!"),
+                }
+            } else {
+                match aoc12::program_groups(&utils::merge_args(&args, 3, "\n")) {
+                    Some(group_count) => println!("Independent program groups: {}!", group_count),
+                    None => println!("Invalid input!"),
+                }
             }
         }
         _ => println!("Unknown puzzle!"),
