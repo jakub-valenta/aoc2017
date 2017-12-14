@@ -184,6 +184,11 @@ fn main() {
                     Some(severity) => println!("Packet severity is {}!", severity),
                     None => println!("Invalid input!"),
                 }
+            } else {
+                match aoc13::compute_delay(&utils::merge_args(&args, 3, "\n")) {
+                    Some(severity) => println!("Packet must be delayed {} pico seconds!", severity),
+                    None => println!("Invalid input!"),
+                }
             }
         }
         _ => println!("Unknown puzzle!"),
