@@ -15,7 +15,7 @@ pub fn parse_numbers<T: FromStr>(digits: &str, delimiter: char) -> Option<Vec<T>
     let digits = digits.trim();
     if digits.len() > 0 {
         for item in digits.split(delimiter) {
-            match item.parse::<T>() {
+            match item.trim().parse::<T>() {
                 Ok(x) => row.push(x),
                 _ => return None,
             };
@@ -35,6 +35,7 @@ fn test_parse_numbers() {
     assert_eq!(Some(vec![]), parse_numbers::<i32>("", ' '));
     assert_eq!(Some(vec![-5, 6, 7]), parse_numbers::<i32>("-5 6 7 ", ' '));
     assert_eq!(Some(vec![5, 6, 7]), parse_numbers::<u32>("5 6 7", ' '));
+    assert_eq!(Some(vec![5, 6, 7]), parse_numbers::<u32>("5, 6, 7", ','));
 }
 
 #[test]

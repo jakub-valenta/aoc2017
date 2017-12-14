@@ -9,6 +9,7 @@ mod aoc8;
 mod aoc9;
 mod aoc10;
 mod aoc11;
+mod aoc12;
 mod utils;
 
 use std::env;
@@ -161,6 +162,12 @@ fn main() {
                     Some(path) => println!("Furthest point was {} steps away!", path),
                     None => println!("Invalid input!"),
                 }
+            }
+        }
+        12 => {
+            match aoc12::connected_programs(&utils::merge_args(&args, 3, "\n")) {
+                Some(group_size) => println!("Program count connected to '0': {}!", group_size),
+                None => println!("Invalid input!"),
             }
         }
         _ => println!("Unknown puzzle!"),
