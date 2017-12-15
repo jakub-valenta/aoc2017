@@ -12,6 +12,7 @@ mod aoc11;
 mod aoc12;
 mod aoc13;
 mod aoc14;
+mod aoc15;
 mod utils;
 
 use std::env;
@@ -205,7 +206,17 @@ fn main() {
                 );
             }
         }
-
+        15 => {
+            let matches = if star == 1 {
+                aoc15::count_matches(&args[3], &args[4])
+            } else {
+                aoc15::count_filtered(&args[3], &args[4])
+            };
+            match matches {
+                Some(matches) => println!("Judge found {} matches!", matches),
+                None => println!("Invalid input!"),
+            }
+        }
         _ => println!("Unknown puzzle!"),
     }
 }
