@@ -8,8 +8,7 @@ pub fn find_bottom_program(programs: &str) -> Option<String> {
 
 pub fn correct_weight(programs: &str) -> Option<u32> {
     let bottom_program = find_bottom_program_impl(programs)?;
-    let mut unbalanced = bottom_program.find_unbalanced()?;
-    None
+    Some(bottom_program.balance()?)
 }
 
 fn find_bottom_program_impl(programs: &str) -> Option<Program> {
@@ -82,6 +81,18 @@ impl Program {
             )
     }
 
+    fn balance(&self) -> Option<u32> {
+        if self.is_balanced() {
+            return None;
+        }
+        for child in self.children.iter() {
+            if let Some(weight) = child.balance() {
+                return Some(weight);
+            }
+        }
+        Some(self.balance_children())
+    }
+
     fn is_balanced(&self) -> bool {
         let weights = self.children
             .iter()
@@ -100,29 +111,28 @@ impl Program {
         }
     }
 
-    fn find_unbalanced(&self) -> Option<&Program> {
-        if !self.is_balanced() {
-            Some(self)
-        } else {
-            Some(self.children.iter().filter(|&x| x.is_balanced()).next()?)
-        }
-    }
-
-    fn balance(&mut self, weight: u32) {
-        let tower_size = self.tower_size();
-        let children_size = tower_size - self.weight;
-        if weight == tower_size {
-            return;
-        }
+    fn balance_children(&self) -> u32 {
         let weights = self.children
             .iter()
             .map(|x| x.tower_weight())
             .collect::<Vec<u32>>();
-        if weights.iter().max() == weights.iter().min() {
-            self.weight = weight - children_size;
+        let mut weight = weights[0];
+        let different = weights
+            .iter()
+            .enumerate()
+            .filter(|&(_, x)| *x != weight)
+            .collect::<Vec<_>>();
+        let unbalanced = if different.len() > 1 {
+            weight = weights[1];
+            &self.children[0]
         } else {
-
-        }
+            &self.children[different[0].0]
+        };
+        weight -
+            unbalanced.children.iter().fold(
+                0,
+                |acc, x| acc + x.tower_weight(),
+            )
     }
 }
 
@@ -135,7 +145,7 @@ fn test_examples() {
         )
     );
     assert_eq!(
-        Some(8),
+        Some(60),
         correct_weight(
             "pbga (66)\nxhth (57)\nebii (61)\nhavc (66)\nktlj (57)\nfwft (72) -> ktlj, cntj, xhth\nqoyq (66)\npadx (45) -> pbga, havc, qoyq\ntknk (41) -> ugml, padx, fwft\njptl (61)\nugml (68) -> gyxo, ebii, jptl\ngyxo (61)\ncntj (57)",
         )
