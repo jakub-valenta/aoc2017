@@ -1,3 +1,4 @@
+use std::num::ParseIntError;
 use std::str::FromStr;
 
 pub fn merge_args(args: &Vec<String>, first: usize, separator: &str) -> String {
@@ -22,6 +23,15 @@ pub fn parse_numbers<T: FromStr>(digits: &str, delimiter: char) -> Option<Vec<T>
         }
     }
     Some(row)
+}
+
+#[derive(Debug, PartialEq, PartialOrd, Eq, Clone, Default)]
+pub struct Error;
+
+impl From<ParseIntError> for Error {
+    fn from(_: ParseIntError) -> Error {
+        Error {}
+    }
 }
 
 #[test]

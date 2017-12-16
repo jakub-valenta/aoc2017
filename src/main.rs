@@ -13,6 +13,7 @@ mod aoc12;
 mod aoc13;
 mod aoc14;
 mod aoc15;
+mod aoc16;
 mod utils;
 
 use std::env;
@@ -214,6 +215,17 @@ fn main() {
             };
             match matches {
                 Some(matches) => println!("Judge found {} matches!", matches),
+                None => println!("Invalid input!"),
+            }
+        }
+        16 => {
+            let matches = if star == 1 {
+                aoc16::dance(&utils::merge_args(&args, 3, ","))
+            } else {
+                aoc16::dance_whole_night(&utils::merge_args(&args, 3, ","))
+            };
+            match matches {
+                Some(matches) => println!("Dance {}!", matches),
                 None => println!("Invalid input!"),
             }
         }

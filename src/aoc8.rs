@@ -1,8 +1,8 @@
 use std::cmp;
 use std::collections::HashMap;
 use std::convert::AsRef;
-use std::num::ParseIntError;
 use std::str::FromStr;
+use utils;
 
 pub fn find_max(program: &str) -> Option<i32> {
     find_max_impl(program, true)
@@ -39,15 +39,6 @@ fn parse_program(program: &str) -> Option<Vec<Instruction>> {
     Some(instructions)
 }
 
-#[derive(Debug, PartialEq, PartialOrd, Eq, Clone, Default)]
-struct Error;
-
-impl From<ParseIntError> for Error {
-    fn from(_: ParseIntError) -> Error {
-        Error {}
-    }
-}
-
 #[derive(Debug, PartialEq, PartialOrd, Eq, Clone)]
 enum Operation {
     Inc,
@@ -64,12 +55,12 @@ impl Operation {
 }
 
 impl FromStr for Operation {
-    type Err = Error;
+    type Err = utils::Error;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s.as_ref() {
             "inc" => Ok(Operation::Inc),
             "dec" => Ok(Operation::Dec),
-            _ => Err(Error),
+            _ => Err(utils::Error),
         }
     }
 }
@@ -98,7 +89,7 @@ impl Compare {
 }
 
 impl FromStr for Compare {
-    type Err = Error;
+    type Err = utils::Error;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s.as_ref() {
             "<" => Ok(Compare::LT),
@@ -107,7 +98,7 @@ impl FromStr for Compare {
             "!=" => Ok(Compare::NE),
             "<=" => Ok(Compare::LE),
             ">=" => Ok(Compare::HE),
-            _ => Err(Error),
+            _ => Err(utils::Error),
         }
     }
 }
@@ -166,16 +157,16 @@ impl Instruction {
 }
 
 impl FromStr for Instruction {
-    type Err = Error;
+    type Err = utils::Error;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let mut tokens = s.split(' ');
-        let register = tokens.next().ok_or(Error {})?;
-        let operation = Operation::from_str(tokens.next().ok_or(Error {})?)?;
-        let value = i32::from_str_radix(tokens.next().ok_or(Error {})?, 10)?;
-        tokens.next().ok_or(Error {})?;
-        let cond_register = tokens.next().ok_or(Error {})?;
-        let compare = Compare::from_str(tokens.next().ok_or(Error {})?)?;
-        let cond_value = i32::from_str_radix(tokens.next().ok_or(Error {})?, 10)?;
+        let register = tokens.next().ok_or(utils::Error {})?;
+        let operation = Operation::from_str(tokens.next().ok_or(utils::Error {})?)?;
+        let value = i32::from_str_radix(tokens.next().ok_or(utils::Error {})?, 10)?;
+        tokens.next().ok_or(utils::Error {})?;
+        let cond_register = tokens.next().ok_or(utils::Error {})?;
+        let compare = Compare::from_str(tokens.next().ok_or(utils::Error {})?)?;
+        let cond_value = i32::from_str_radix(tokens.next().ok_or(utils::Error {})?, 10)?;
         Ok(Instruction {
             register: String::from(register),
             operation: operation,
@@ -197,7 +188,7 @@ fn test_examples() {
 
 #[test]
 fn test_from_str() {
-    assert_eq!(Err(Error), Instruction::from_str(""));
+    assert_eq!(Err(utils::Error), Instruction::from_str(""));
     assert_eq!(
         Ok(Instruction::new(
             "b",

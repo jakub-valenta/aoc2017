@@ -1,5 +1,6 @@
 use std::cmp;
 use std::str::FromStr;
+use utils;
 
 pub fn find_shortest_path(path: &str) -> Option<u32> {
     let directions = path.split(',')
@@ -31,8 +32,6 @@ pub fn find_furthest_point(path: &str) -> Option<u32> {
     Some(max)
 }
 
-struct Error;
-
 enum Direction {
     North,
     NorthEast,
@@ -56,7 +55,7 @@ impl Direction {
 }
 
 impl FromStr for Direction {
-    type Err = Error;
+    type Err = utils::Error;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s.as_ref() {
             "n" => Ok(Direction::North),
@@ -65,7 +64,7 @@ impl FromStr for Direction {
             "s" => Ok(Direction::South),
             "sw" => Ok(Direction::SouthWest),
             "nw" => Ok(Direction::NorthWest),
-            _ => Err(Error),
+            _ => Err(utils::Error),
         }
     }
 }
