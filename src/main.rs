@@ -14,6 +14,7 @@ mod aoc13;
 mod aoc14;
 mod aoc15;
 mod aoc16;
+mod aoc17;
 mod utils;
 
 use std::env;
@@ -226,6 +227,17 @@ fn main() {
             };
             match matches {
                 Some(matches) => println!("Dance {}!", matches),
+                None => println!("Invalid input!"),
+            }
+        }
+        17 => {
+            let value = if star == 1 {
+                aoc17::spinlock(&args[3])
+            } else {
+                None
+            };
+            match value {
+                Some(value) => println!("Value held by spinlock {}!", value),
                 None => println!("Invalid input!"),
             }
         }

@@ -167,12 +167,12 @@ impl FromStr for Instruction {
         let cond_register = tokens.next().ok_or(utils::Error {})?;
         let compare = Compare::from_str(tokens.next().ok_or(utils::Error {})?)?;
         let cond_value = i32::from_str_radix(tokens.next().ok_or(utils::Error {})?, 10)?;
-        Ok(Instruction {
-            register: String::from(register),
-            operation: operation,
-            value: value,
-            condition: Condition::new(cond_register, compare, cond_value),
-        })
+        Ok(Instruction::new(
+            register,
+            operation,
+            value,
+            Condition::new(cond_register, compare, cond_value),
+        ))
     }
 }
 
