@@ -234,7 +234,7 @@ fn main() {
             let value = if star == 1 {
                 aoc17::spinlock(&args[3])
             } else {
-                None
+                aoc17::angry_spinlock(&args[3])
             };
             match value {
                 Some(value) => println!("Value held by spinlock {}!", value),
