@@ -15,6 +15,7 @@ mod aoc14;
 mod aoc15;
 mod aoc16;
 mod aoc17;
+mod aoc18;
 mod utils;
 
 use std::env;
@@ -238,6 +239,17 @@ fn main() {
             };
             match value {
                 Some(value) => println!("Value held by spinlock {}!", value),
+                None => println!("Invalid input!"),
+            }
+        }
+        18 => {
+            let last_sound = if star == 1 {
+                aoc18::recover_frequency(&utils::merge_args(&args, 3, "\n"))
+            } else {
+                None
+            };
+            match last_sound {
+                Some(value) => println!("Last played sound {}!", value),
                 None => println!("Invalid input!"),
             }
         }

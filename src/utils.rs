@@ -1,3 +1,4 @@
+use std::char::ParseCharError;
 use std::num::ParseIntError;
 use std::str::FromStr;
 
@@ -30,6 +31,12 @@ pub struct Error;
 
 impl From<ParseIntError> for Error {
     fn from(_: ParseIntError) -> Error {
+        Error {}
+    }
+}
+
+impl From<ParseCharError> for Error {
+    fn from(_: ParseCharError) -> Error {
         Error {}
     }
 }
