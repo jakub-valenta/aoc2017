@@ -243,14 +243,16 @@ fn main() {
             }
         }
         18 => {
-            let last_sound = if star == 1 {
-                aoc18::recover_frequency(&utils::merge_args(&args, 3, "\n"))
+            if star == 1 {
+                match aoc18::recover_frequency(&utils::merge_args(&args, 3, "\n")) {
+                    Some(value) => println!("Last played sound {}!", value),
+                    None => println!("Invalid input!"),
+                }
             } else {
-                None
-            };
-            match last_sound {
-                Some(value) => println!("Last played sound {}!", value),
-                None => println!("Invalid input!"),
+                match aoc18::count_sends(&utils::merge_args(&args, 3, "\n")) {
+                    Some(send_count) => println!("Send request sent by program 1 {}!", send_count),
+                    None => println!("Invalid input!"),
+                }
             }
         }
         _ => println!("Unknown puzzle!"),
