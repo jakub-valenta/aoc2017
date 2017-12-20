@@ -16,6 +16,7 @@ mod aoc15;
 mod aoc16;
 mod aoc17;
 mod aoc18;
+mod aoc19;
 mod utils;
 
 use std::env;
@@ -253,6 +254,14 @@ fn main() {
                     Some(send_count) => println!("Send request sent by program 1 {}!", send_count),
                     None => println!("Invalid input!"),
                 }
+            }
+        }
+        19 => {
+            match aoc19::walk_path(&utils::read_file(&args[3]).unwrap()) {
+                Some((sign, steps)) => {
+                    println!("Sign found on path {} after steps {}!", sign, steps)
+                }
+                None => println!("Invalid input!"),
             }
         }
         _ => println!("Unknown puzzle!"),

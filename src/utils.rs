@@ -1,4 +1,6 @@
 use std::char::ParseCharError;
+use std::fs::File;
+use std::io::Read;
 use std::num::ParseIntError;
 use std::str::FromStr;
 
@@ -24,6 +26,13 @@ pub fn parse_numbers<T: FromStr>(digits: &str, delimiter: char) -> Option<Vec<T>
         }
     }
     Some(row)
+}
+
+pub fn read_file(name: &str) -> Option<String> {
+    let mut file = File::open(name).ok()?;
+    let mut contents = String::new();
+    file.read_to_string(&mut contents).ok()?;
+    Some(contents)
 }
 
 #[derive(Debug, PartialEq, PartialOrd, Eq, Clone, Default)]
