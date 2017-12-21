@@ -17,6 +17,7 @@ mod aoc16;
 mod aoc17;
 mod aoc18;
 mod aoc19;
+mod aoc20;
 mod utils;
 
 use std::env;
@@ -261,6 +262,12 @@ fn main() {
                 Some((sign, steps)) => {
                     println!("Sign found on path {} after steps {}!", sign, steps)
                 }
+                None => println!("Invalid input!"),
+            }
+        }
+        20 => {
+            match aoc20::closest_particle(&utils::read_file(&args[3]).unwrap()) {
+                Some(closest) => println!("Closest particle is {}!", closest),
                 None => println!("Invalid input!"),
             }
         }
